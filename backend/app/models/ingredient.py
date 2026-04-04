@@ -1,0 +1,13 @@
+from sqlalchemy import String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from app.db.base_class import Base
+
+
+class Ingredient(Base):
+    __tablename__ = "ingredients"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    name: Mapped[str] = mapped_column(String(120), unique=True, index=True)
+
+    recipe_links = relationship("RecipeIngredient", back_populates="ingredient", cascade="all, delete-orphan")
