@@ -139,3 +139,6 @@ The frontend starts at [http://localhost:3000](http://localhost:3000).
 3. Backend filters recipes, computes weighted scores, and returns ranked results
 4. UI shows match score, matched ingredients, and missing ingredients
 5. Authenticated users can save recipes to favorites
+
+## Link
+https://ingredient-based-recipe-recommender.vercel.app/

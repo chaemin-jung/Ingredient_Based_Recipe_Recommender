@@ -10,13 +10,16 @@ from app.db.base import Base
 from app.db.session import SessionLocal, engine
 from app.utils.seed import seed_recipes
 
+from fastapi.staticfiles import StaticFiles
+import os
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title=settings.app_name)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -37,3 +40,11 @@ def startup_event() -> None:
 @app.get("/health")
 def health_check() -> dict[str, str]:
     return {"status": "ok"}
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+app.mount(
+    "/",
+    StaticFiles(directory=os.path.join(BASE_DIR, "../frontend"), html=True),
+    name="frontend",
+)
